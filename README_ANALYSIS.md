@@ -1,4 +1,3 @@
-```
 ## Analysis of Cahoots Data
 
 This Jupyter Notebook (`Analysis.ipynb`) analyzes the cleaned datasets created in `data_prep.ipynb`.
@@ -45,6 +44,4 @@ This Jupyter Notebook (`Analysis.ipynb`) analyzes the cleaned datasets created i
 1. Ensure the required dependencies are installed.
 2. Ensure the cleaned data files (`cleaned_CAD_data.csv`, `cleaned_cahoots_data.csv`, and `cleaned_CAD_diversions.csv`) are present in the `data/cleaned_data` directory.
 3. Execute the notebook cells sequentially. 
-
-```
 

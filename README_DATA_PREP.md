@@ -1,4 +1,3 @@
-```
 ## Data Preparation for Cahoots Analysis
 
 This Jupyter Notebook (`data_prep.ipynb`) cleans and preprocesses two datasets for analyzing Cahoots' activities:
@@ -56,4 +55,3 @@ The notebook performs the following steps:
 3. Execute the notebook cells sequentially. 
 
 The cleaned datasets will be saved in the `data/cleaned_data` directory.
-``` 
