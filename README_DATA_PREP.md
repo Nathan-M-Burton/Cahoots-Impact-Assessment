@@ -3,7 +3,7 @@
 This Jupyter Notebook (`data_prep.ipynb`) cleans and preprocesses two datasets for analyzing Cahoots' activities:
 
 1. **CAD Data:** Data from the Computer-Aided Dispatch (CAD) system.
-2. **Cahoots Data:** Data directly from the Cahoots organization. 
+2. **CAD Diversions Data:** Data from the Computer-Aided Dispatch (CAD) system.
 
 The notebook performs the following steps:
 
