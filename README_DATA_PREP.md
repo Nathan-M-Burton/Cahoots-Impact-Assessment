@@ -18,16 +18,8 @@ The notebook performs the following steps:
    - Sorts data by `Call_Created_Time`.
    - Saves the cleaned CAD data to `"data/cleaned_data/cleaned_CAD_data.csv"`.
 
-**2. Cleaning the Cahoots Data:**
 
-   - Loads Cahoots data from `"data/call_data_from_CAHOOTS_2021_2022.xlsx"`.
-   - Drops rows with missing "Reason for Dispatch".
-   - Combines "Date" and "TimeOfCall" into a single "DateTime" column.
-   - Filters data for calls from Eugene only to match the CAD data.
-   - Selects only the "DateTime" and "Reason for Dispatch" columns.
-   - Saves the cleaned Cahoots data to `"data/cleaned_data/cleaned_cahoots_data.csv"`.
-
-**3. Creating the CAD Diversions Dataset:**
+**2. Creating the CAD Diversions Dataset:**
 
    - Identifies incident types and dispositions exclusively handled by either Cahoots or police.
    - Filters the cleaned CAD data to include only shared incident and disposition types.

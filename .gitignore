@@ -1,12 +1,16 @@
 # Ignore everything in the data folder
 data/
 
+Final_Research_Paper/
+
 # Ignore draft notebooks 
 Cahoots_rough.ipynb
 Cahoots_draft.ipynb
 CAHOOTS_DIVERSIONS.ipynb
 what_is_diversion.ipynb
-scripts
+
+
+
 
 # Ignore system files
 .DS_Store
