@@ -4486,12 +4486,12 @@ window.Quarto = {
 </div>
 </div>
 <p>Percent of Welfare Checks Handled by Cahoots 2017:</p>
-<div id="cell-42" class="cell" data-execution_count="14">
+<div id="cell-42" class="cell" data-execution_count="26">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>(data_2017[data_2017[<span class="st">&quot;Cahoots_related&quot;</span>] <span class="op">==</span> <span class="dv">1</span>][<span class="st">&quot;InitialIncidentTypeDescription&quot;</span>].value_counts().to_list()[<span class="dv">0</span>] <span class="op">/</span> data_2017[<span class="st">&quot;InitialIncidentTypeDescription&quot;</span>].value_counts().to_list()[<span class="dv">1</span>]) <span class="op">*</span> <span class="dv">100</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
-<div class="cell-output cell-output-display" data-execution_count="14">
+<div class="cell-output cell-output-display" data-execution_count="26">
 <pre><code>49.62762356127285</code></pre>
 </div>
 </div>
@@ -4918,31 +4918,30 @@ window.Quarto = {
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>top_5_incidents <span class="op">=</span> CAD_data_diversions_filtered[(CAD_data_diversions_filtered[<span class="st">&quot;PrimaryUnitCallSign&quot;</span>] <span class="op">==</span> <span class="st">&quot;CAHOOT&quot;</span>) <span class="op">&amp;</span> (CAD_data_diversions_filtered[<span class="st">&quot;IsPrimary&quot;</span>] <span class="op">==</span> <span class="dv">1</span>)][<span class="st">&quot;InitialIncidentTypeDescription&quot;</span>].value_counts().nlargest(<span class="dv">5</span>).index</span>
-<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="co">#top_5_incidents = CAD_data_diversions_filtered[CAD_data_diversions_filtered[&quot;Cahoots_related&quot;] == 1][&quot;InitialIncidentTypeDescription&quot;].value_counts().nlargest(5).index</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>CAD_data_diversions_filtered_top_5 <span class="op">=</span> CAD_data_diversions_filtered[CAD_data_diversions_filtered[<span class="st">&quot;InitialIncidentTypeDescription&quot;</span>].isin(top_5_incidents)]</span>
-<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>incident_data <span class="op">=</span> CAD_data_diversions_filtered_top_5.groupby([<span class="st">&#39;InitialIncidentTypeDescription&#39;</span>, <span class="st">&#39;Cahoots_related&#39;</span>]).size().unstack(fill_value<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>incident_data_prop <span class="op">=</span> incident_data.div(incident_data.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>), axis<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>incident_data_sorted <span class="op">=</span> incident_data_prop.sort_values(by<span class="op">=</span><span class="dv">1</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> incident_data_sorted.plot(kind<span class="op">=</span><span class="st">&#39;bar&#39;</span>, stacked<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span>[<span class="st">&#39;lightblue&#39;</span>, <span class="st">&#39;orange&#39;</span>], figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Add labels to the Cahoots portion of the bars</span></span>
-<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> p <span class="kw">in</span> ax.patches:</span>
-<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>    width, height <span class="op">=</span> p.get_width(), p.get_height()</span>
-<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>    x, y <span class="op">=</span> p.get_xy()</span>
-<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> p.get_facecolor() <span class="op">==</span> ax.patches[<span class="op">-</span><span class="dv">1</span>].get_facecolor() <span class="kw">and</span> height <span class="op">&gt;</span> <span class="dv">0</span>: </span>
-<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a>        ax.text(x <span class="op">+</span> width <span class="op">/</span> <span class="dv">2</span>, y <span class="op">+</span> height <span class="op">/</span> <span class="dv">2</span>, <span class="ss">f&#39;</span><span class="sc">{</span>height<span class="sc">:.1%}</span><span class="ss">&#39;</span>, ha<span class="op">=</span><span class="st">&#39;center&#39;</span>, va<span class="op">=</span><span class="st">&#39;center&#39;</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Diversion Rate of Overlapping Mandate for the top 5 Cahoots incident Types of Overlapping Mandate&#39;</span>)</span>
-<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Incident Type&#39;</span>)</span>
-<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Proportion of Calls&#39;</span>)</span>
-<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">&#39;right&#39;</span>)</span>
-<span id="cb39-24"><a href="#cb39-24" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">&#39;EPD&#39;</span>, <span class="st">&#39;Cahoots&#39;</span>], loc<span class="op">=</span><span class="st">&#39;lower right&#39;</span>)</span>
-<span id="cb39-25"><a href="#cb39-25" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb39-26"><a href="#cb39-26" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>CAD_data_diversions_filtered_top_5 <span class="op">=</span> CAD_data_diversions_filtered[CAD_data_diversions_filtered[<span class="st">&quot;InitialIncidentTypeDescription&quot;</span>].isin(top_5_incidents)]</span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a>incident_data <span class="op">=</span> CAD_data_diversions_filtered_top_5.groupby([<span class="st">&#39;InitialIncidentTypeDescription&#39;</span>, <span class="st">&#39;Cahoots_related&#39;</span>]).size().unstack(fill_value<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a>incident_data_prop <span class="op">=</span> incident_data.div(incident_data.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>), axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>incident_data_sorted <span class="op">=</span> incident_data_prop.sort_values(by<span class="op">=</span><span class="dv">1</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> incident_data_sorted.plot(kind<span class="op">=</span><span class="st">&#39;bar&#39;</span>, stacked<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span>[<span class="st">&#39;lightblue&#39;</span>, <span class="st">&#39;orange&#39;</span>], figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb39-11"><a href="#cb39-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-12"><a href="#cb39-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Add labels to the Cahoots portion of the bars</span></span>
+<span id="cb39-13"><a href="#cb39-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> p <span class="kw">in</span> ax.patches:</span>
+<span id="cb39-14"><a href="#cb39-14" aria-hidden="true" tabindex="-1"></a>    width, height <span class="op">=</span> p.get_width(), p.get_height()</span>
+<span id="cb39-15"><a href="#cb39-15" aria-hidden="true" tabindex="-1"></a>    x, y <span class="op">=</span> p.get_xy()</span>
+<span id="cb39-16"><a href="#cb39-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> p.get_facecolor() <span class="op">==</span> ax.patches[<span class="op">-</span><span class="dv">1</span>].get_facecolor() <span class="kw">and</span> height <span class="op">&gt;</span> <span class="dv">0</span>: </span>
+<span id="cb39-17"><a href="#cb39-17" aria-hidden="true" tabindex="-1"></a>        ax.text(x <span class="op">+</span> width <span class="op">/</span> <span class="dv">2</span>, y <span class="op">+</span> height <span class="op">/</span> <span class="dv">2</span>, <span class="ss">f&#39;</span><span class="sc">{</span>height<span class="sc">:.1%}</span><span class="ss">&#39;</span>, ha<span class="op">=</span><span class="st">&#39;center&#39;</span>, va<span class="op">=</span><span class="st">&#39;center&#39;</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb39-18"><a href="#cb39-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-19"><a href="#cb39-19" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Diversion Rate of Overlapping Mandate for the top 5 Cahoots incident Types of Overlapping Mandate&#39;</span>)</span>
+<span id="cb39-20"><a href="#cb39-20" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Incident Type&#39;</span>)</span>
+<span id="cb39-21"><a href="#cb39-21" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Proportion of Calls&#39;</span>)</span>
+<span id="cb39-22"><a href="#cb39-22" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">&#39;right&#39;</span>)</span>
+<span id="cb39-23"><a href="#cb39-23" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">&#39;EPD&#39;</span>, <span class="st">&#39;Cahoots&#39;</span>], loc<span class="op">=</span><span class="st">&#39;lower right&#39;</span>)</span>
+<span id="cb39-24"><a href="#cb39-24" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb39-25"><a href="#cb39-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>
@@ -4958,32 +4957,31 @@ window.Quarto = {
 <div id="cell-71" class="cell" data-execution_count="24">
 <details class="code-fold">
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co">#top_5_incidents = CAD_data_diversions_filtered[(CAD_data_diversions_filtered[&quot;PrimaryUnitCallSign&quot;] != &quot;CAHOOT&quot;) &amp; (CAD_data_diversions_filtered[&quot;IsPrimary&quot;] == 1)][&quot;InitialIncidentTypeDescription&quot;].value_counts().nlargest(5).index</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>top_5_incidents <span class="op">=</span> CAD_data_diversions_filtered[CAD_data_diversions_filtered[<span class="st">&quot;Cahoots_related&quot;</span>] <span class="op">==</span> <span class="dv">0</span>][<span class="st">&quot;InitialIncidentTypeDescription&quot;</span>].value_counts().nlargest(<span class="dv">5</span>).index</span>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a>top_5_incidents <span class="op">=</span> CAD_data_diversions_filtered[CAD_data_diversions_filtered[<span class="st">&quot;Cahoots_related&quot;</span>] <span class="op">==</span> <span class="dv">0</span>][<span class="st">&quot;InitialIncidentTypeDescription&quot;</span>].value_counts().nlargest(<span class="dv">5</span>).index</span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a>CAD_data_diversions_filtered_top_5 <span class="op">=</span> CAD_data_diversions_filtered[CAD_data_diversions_filtered[<span class="st">&quot;InitialIncidentTypeDescription&quot;</span>].isin(top_5_incidents)]</span>
-<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>incident_data <span class="op">=</span> CAD_data_diversions_filtered_top_5.groupby([<span class="st">&#39;InitialIncidentTypeDescription&#39;</span>, <span class="st">&#39;Cahoots_related&#39;</span>]).size().unstack(fill_value<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a>incident_data_prop <span class="op">=</span> incident_data.div(incident_data.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>), axis<span class="op">=</span><span class="dv">0</span>)</span>
-<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>incident_data_sorted <span class="op">=</span> incident_data_prop.sort_values(by<span class="op">=</span><span class="dv">1</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
-<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> incident_data_sorted.plot(kind<span class="op">=</span><span class="st">&#39;bar&#39;</span>, stacked<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span>[<span class="st">&#39;lightblue&#39;</span>, <span class="st">&#39;orange&#39;</span>], figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
-<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Add labels to the Cahoots portion of the bars</span></span>
-<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> p <span class="kw">in</span> ax.patches:</span>
-<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>    width, height <span class="op">=</span> p.get_width(), p.get_height()</span>
-<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>    x, y <span class="op">=</span> p.get_xy()</span>
-<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> p.get_facecolor() <span class="op">==</span> ax.patches[<span class="op">-</span><span class="dv">1</span>].get_facecolor() <span class="kw">and</span> height <span class="op">&gt;</span> <span class="dv">0</span>: </span>
-<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a>        ax.text(x <span class="op">+</span> width <span class="op">/</span> <span class="dv">2</span>, y <span class="op">+</span> height <span class="op">/</span> <span class="dv">2</span>, <span class="ss">f&#39;</span><span class="sc">{</span>height<span class="sc">:.1%}</span><span class="ss">&#39;</span>, ha<span class="op">=</span><span class="st">&#39;center&#39;</span>, va<span class="op">=</span><span class="st">&#39;center&#39;</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
-<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Diversion Rate for the top 5 EPD incident Types of Overlapping Mandate&#39;</span>)</span>
-<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Incident Type&#39;</span>)</span>
-<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Proportion of Calls&#39;</span>)</span>
-<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">&#39;right&#39;</span>)</span>
-<span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">&#39;EPD&#39;</span>, <span class="st">&#39;Cahoots&#39;</span>], loc<span class="op">=</span><span class="st">&#39;lower right&#39;</span>)</span>
-<span id="cb40-25"><a href="#cb40-25" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
-<span id="cb40-26"><a href="#cb40-26" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a>CAD_data_diversions_filtered_top_5 <span class="op">=</span> CAD_data_diversions_filtered[CAD_data_diversions_filtered[<span class="st">&quot;InitialIncidentTypeDescription&quot;</span>].isin(top_5_incidents)]</span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>incident_data <span class="op">=</span> CAD_data_diversions_filtered_top_5.groupby([<span class="st">&#39;InitialIncidentTypeDescription&#39;</span>, <span class="st">&#39;Cahoots_related&#39;</span>]).size().unstack(fill_value<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>incident_data_prop <span class="op">=</span> incident_data.div(incident_data.<span class="bu">sum</span>(axis<span class="op">=</span><span class="dv">1</span>), axis<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb40-8"><a href="#cb40-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-9"><a href="#cb40-9" aria-hidden="true" tabindex="-1"></a>incident_data_sorted <span class="op">=</span> incident_data_prop.sort_values(by<span class="op">=</span><span class="dv">1</span>, ascending<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb40-10"><a href="#cb40-10" aria-hidden="true" tabindex="-1"></a>ax <span class="op">=</span> incident_data_sorted.plot(kind<span class="op">=</span><span class="st">&#39;bar&#39;</span>, stacked<span class="op">=</span><span class="va">True</span>, color<span class="op">=</span>[<span class="st">&#39;lightblue&#39;</span>, <span class="st">&#39;orange&#39;</span>], figsize<span class="op">=</span>(<span class="dv">10</span>, <span class="dv">6</span>))</span>
+<span id="cb40-11"><a href="#cb40-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-12"><a href="#cb40-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Add labels to the Cahoots portion of the bars</span></span>
+<span id="cb40-13"><a href="#cb40-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> p <span class="kw">in</span> ax.patches:</span>
+<span id="cb40-14"><a href="#cb40-14" aria-hidden="true" tabindex="-1"></a>    width, height <span class="op">=</span> p.get_width(), p.get_height()</span>
+<span id="cb40-15"><a href="#cb40-15" aria-hidden="true" tabindex="-1"></a>    x, y <span class="op">=</span> p.get_xy()</span>
+<span id="cb40-16"><a href="#cb40-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> p.get_facecolor() <span class="op">==</span> ax.patches[<span class="op">-</span><span class="dv">1</span>].get_facecolor() <span class="kw">and</span> height <span class="op">&gt;</span> <span class="dv">0</span>: </span>
+<span id="cb40-17"><a href="#cb40-17" aria-hidden="true" tabindex="-1"></a>        ax.text(x <span class="op">+</span> width <span class="op">/</span> <span class="dv">2</span>, y <span class="op">+</span> height <span class="op">/</span> <span class="dv">2</span>, <span class="ss">f&#39;</span><span class="sc">{</span>height<span class="sc">:.1%}</span><span class="ss">&#39;</span>, ha<span class="op">=</span><span class="st">&#39;center&#39;</span>, va<span class="op">=</span><span class="st">&#39;center&#39;</span>, fontsize<span class="op">=</span><span class="dv">10</span>)</span>
+<span id="cb40-18"><a href="#cb40-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-19"><a href="#cb40-19" aria-hidden="true" tabindex="-1"></a>plt.title(<span class="st">&#39;Diversion Rate for the top 5 EPD incident Types of Overlapping Mandate&#39;</span>)</span>
+<span id="cb40-20"><a href="#cb40-20" aria-hidden="true" tabindex="-1"></a>plt.xlabel(<span class="st">&#39;Incident Type&#39;</span>)</span>
+<span id="cb40-21"><a href="#cb40-21" aria-hidden="true" tabindex="-1"></a>plt.ylabel(<span class="st">&#39;Proportion of Calls&#39;</span>)</span>
+<span id="cb40-22"><a href="#cb40-22" aria-hidden="true" tabindex="-1"></a>plt.xticks(rotation<span class="op">=</span><span class="dv">45</span>, ha<span class="op">=</span><span class="st">&#39;right&#39;</span>)</span>
+<span id="cb40-23"><a href="#cb40-23" aria-hidden="true" tabindex="-1"></a>plt.legend([<span class="st">&#39;EPD&#39;</span>, <span class="st">&#39;Cahoots&#39;</span>], loc<span class="op">=</span><span class="st">&#39;lower right&#39;</span>)</span>
+<span id="cb40-24"><a href="#cb40-24" aria-hidden="true" tabindex="-1"></a>plt.tight_layout()</span>
+<span id="cb40-25"><a href="#cb40-25" aria-hidden="true" tabindex="-1"></a>plt.show()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
 <div>

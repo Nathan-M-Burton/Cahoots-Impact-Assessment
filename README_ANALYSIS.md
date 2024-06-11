@@ -1,47 +1,53 @@
-## Analysis of Cahoots Data
+## Analysis of Cahoots and EPD Data: Replicating and Extending the EPD's 2021 Evaluation
 
-This Jupyter Notebook (`Analysis.ipynb`) analyzes the cleaned datasets created in `data_prep.ipynb`.
+NOTE: `Analysis.ipynb` Includes all intermediate calculations that led to the conclusions presented in my final report. For a more polished view of my process, go to:
 
-**Analysis:**
+## https://nathan-m-burton.github.io/Cahoots-Impact-Assessment/
 
-1. **Proportion of Calls by Year:**
-   - Calculates the proportion of calls handled by Cahoots vs. police each year.
-   - Creates a stacked bar chart visualizing these proportions.
-   - Labels the Cahoots portion of each bar with the percentage.
 
-2. **Incident Type Visualization:**
-   - Uses the `create_treemap` function to generate treemaps showing the distribution of:
-     - Incident types handled by Cahoots.
-     - Incident types handled by police.
-   - The function allows customization:
-     - `top_n`: Number of top categories to display.
-     - `group_others`: Whether to group remaining categories as "Other".
-     - `max_legend_entries`: Maximum entries in the legend.
-     - `show_labels`: Whether to display labels on the treemap.
-     - `color_list`: List of colors for visualization.
-   - **`hash_to_index` function:**
-      - This function ensures consistent color assignment for incident types across different treemaps. 
-      - It takes the incident type label as input and generates a unique hash value using the SHA256 algorithm. 
-      - This hash value is then converted to a color index within the provided `color_list`, ensuring each incident type is mapped to the same color whenever it appears.
+This Jupyter Notebook (`Analysis.ipynb`) replicates and extends the analysis conducted in the Eugene Police Department's (EPD) 2021 evaluation of Cahoots. It utilizes cleaned datasets created in `data_prep.ipynb`.
 
-3. **Calls with Overlapping Mandates:**
-   - Filters out transports and counseling from the Cahoots dataset and arrests/transports from the CAD dataset.
-   - Calculates and plots the proportion of calls with overlapping mandates handled by Cahoots vs. police each year.
-   - Identifies and visualizes the top 5 incident types with overlapping mandates.
-   - Generates treemaps for incident types with overlapping mandates handled by Cahoots and police.
+**Analysis Overview:**
+
+1.  **Data Replication and Validation:**
+    *   Reproduces the EPD's "Gross Diversion Rates" calculations to assess accuracy and identify methodological flaws.
+    *   Investigates discrepancies between reported values and the underlying data.
+
+2.  **Natural Experiment:**
+    *   Conducts a natural experiment by analyzing welfare check data from 2016-2017 to estimate the true proportion of divertible calls.
+    *   Compares the estimated diversion rates with the EPD's findings.
+
+3.  **Overlapping Mandate Analysis:**
+    *   Introduces the concept of the "Overlapping Mandate" to identify call types handled by both Cahoots and the police.
+    *   Develops a composite scoring method to quantify the degree of overlap for each call type.
+    *   Analyzes diversion rates within the overlapping mandate, highlighting potential areas for Cahoots expansion.
+
+4.  **Temporal Analysis:**
+    *   Examines the evolution of diversion rates over time (2017-2021) to identify trends and patterns.
+    *   Explores potential reasons for fluctuations in diversion rates.
+
+5.  **Call Type Breakdown:**
+    *   Investigates diversion rates for specific call types within the overlapping mandate.
+    *   Identifies opportunities and challenges for Cahoots expansion based on call type analysis.
 
 **Dependencies:**
 
-- Python 3
-- pandas
-- matplotlib
-- squarify
-- numpy
-- hashlib
+*   Python 3
+*   pandas
+*   matplotlib
+*   squarify
+*   numpy
+*   hashlib
 
 **To run this notebook:**
 
-1. Ensure the required dependencies are installed.
-2. Ensure the cleaned data files (`cleaned_CAD_data.csv`, `cleaned_cahoots_data.csv`, and `cleaned_CAD_diversions.csv`) are present in the `data/cleaned_data` directory.
-3. Execute the notebook cells sequentially. 
+1.  Ensure the required dependencies are installed.
+2.  Ensure the cleaned data files are present in the `data/cleaned_data` directory.
+3.  Execute the notebook cells sequentially.
 
+**Key Findings:**
+
+*   The EPD's analysis contains methodological flaws, leading to an underestimation of Cahoots' diversion potential.
+*   Our natural experiment suggests a much higher proportion of divertible calls than initially reported.
+*   The concept of the "Overlapping Mandate" provides a more accurate framework for assessing Cahoots' impact.
+*   Temporal and call type analysis reveal opportunities for Cahoots expansion and optimization of resource allocation.
